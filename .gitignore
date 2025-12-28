@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+venv/
+.venv/
+vision-ai-310/
+
+# ML / AI models
+models/
+weights/
+*.pth
+*.pt
+*.ckpt
+*.gguf
+*.onnx
+
+# Data
+data/
+
+# OS
+.DS_Store
