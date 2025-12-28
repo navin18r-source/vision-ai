@@ -234,3 +234,87 @@ REFERENCES:
 - llama.cpp: https://github.com/ggerganov/llama.cpp
 - MediaPipe: https://github.com/google/mediapipe
 
+--------------------------------------------------
+7. VISION LANGUAGE MODEL (VLM) FINE-TUNING STRATEGY
+--------------------------------------------------
+
+CURRENT STATUS
+
+At the current stage, the Vision Language Model (MiniCPM-V / LLaVA) has NOT been
+fine-tuned specifically for the jewelry domain.
+
+Despite this, inference-only usage with careful prompt engineering has achieved
+approximately 85% accuracy for tasks such as:
+- Jewelry type classification
+- Basic color identification
+- Material inference
+- Style categorization
+
+This indicates that the base model already has strong general visual reasoning
+capabilities.
+
+The remaining errors are mainly observed in:
+- Visually similar categories (e.g., Bracelet vs Watch)
+- Subtle material differences
+- Edge cases with occlusions or low lighting
+
+
+WHY FINE-TUNING IS STILL IMPORTANT
+
+Although inference-only performance is strong, fine-tuning is expected to:
+- Improve classification consistency
+- Reduce ambiguity between similar jewelry types
+- Increase robustness to real-world variations
+- Improve domain-specific understanding
+
+Fine-tuning is planned as a future enhancement once sufficient curated data is
+available.
+
+
+PLANNED FINE-TUNING APPROACH
+
+The fine-tuning strategy will use parameter-efficient methods to avoid full model
+retraining.
+
+1. LoRA (Low-Rank Adaptation)
+   - Injects trainable low-rank matrices into attention layers
+   - Keeps the base model frozen
+   - Requires significantly less GPU memory
+   - Allows fast experimentation and iteration
+
+2. QLoRA (Quantized LoRA)
+   - Combines LoRA with 4-bit / 8-bit quantization
+   - Further reduces memory usage
+   - Enables fine-tuning on consumer GPUs
+   - Maintains near full-precision performance
+
+
+WHY LoRA / QLoRA OVER FULL FINE-TUNING
+
+- Full fine-tuning is expensive and slow
+- Requires large datasets and high-end GPUs
+- Risk of overfitting on small datasets
+
+LoRA and QLoRA provide:
+- Faster training
+- Lower compute cost
+- Safer adaptation without catastrophic forgetting
+- Easy rollback and experimentation
+
+
+EXPECTED FINE-TUNING PIPELINE
+
+1. Curate a jewelry-specific image + text dataset
+2. Define task-specific prompts and labels
+3. Apply LoRA / QLoRA adapters on vision and language layers
+4. Train with low learning rate and limited steps
+5. Validate improvements against inference-only baseline
+6. Merge or load adapters during inference as needed
+
+
+EXPECTED OUTCOME
+
+With domain-specific fine-tuning:
+- Accuracy is expected to improve beyond 90%
+- Reduced confusion between similar categories
+- Better consistency across lighting and backgrounds 
