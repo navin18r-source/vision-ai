@@ -40,8 +40,7 @@ WHY NOT OTHER OPTIONS?
 - ESRGAN: Older version, less refined output
 - SwinIR: Slower inference with similar quality
 - SRCNN / FSRCNN: Lower quality, visible artifacts
-- Waifu2x: Optimized for anime, not real photos
-- Topaz Gigapixel: Commercial and not open-source
+
 
 KEY ADVANTAGES:
 1. Handles real-world degradations
@@ -71,14 +70,6 @@ ControlNet Tile is used to:
 - Maintain original structure
 - Preserve colors and shapes
 - Enhance details without hallucinating new elements
-
-WHY NOT OTHER OPTIONS?
-
-- DALL·E 3: API-only, expensive, limited control
-- Midjourney: No API, Discord-based
-- Stable Diffusion XL: Higher memory usage, unnecessary for enhancement
-- Pure img2img: Alters structure too much
-- GAN-based refiners: Less realistic results
 
 CONFIGURATION CHOICES:
 - Generation strength: 0.3 (preserves original)
@@ -110,8 +101,7 @@ WHY NOT OTHER OPTIONS?
 - Remove.bg: Paid cloud API with privacy concerns
 - MODNet: Optimized for portraits, not products
 - DeepLabV3: General segmentation, weaker edge quality
-- GrabCut: Requires manual input
-- Chroma keying: Needs controlled background
+
 
 KEY ADVANTAGES:
 1. Product-optimized segmentation
