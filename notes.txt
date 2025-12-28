@@ -1,0 +1,236 @@
+MODEL SELECTION & TECHNOLOGY CHOICES
+
+This document explains the rationale behind each AI model and technology choice
+in the VISION pipeline.
+
+
+TABLE OF CONTENTS
+
+1. Super-Resolution: Real-ESRGAN
+2. Generative Enhancement: Stable Diffusion + ControlNet
+3. Background Removal: U2-Net (rembg)
+4. Vision Language Model: MiniCPM-V / LLaVA
+5. Virtual Try-On Implementation
+6. Summary Table
+
+
+--------------------------------------------------
+1. SUPER-RESOLUTION: REAL-ESRGAN
+--------------------------------------------------
+
+WHY REAL-ESRGAN?
+
+Real-ESRGAN (Real-World Enhanced Super-Resolution GAN) was chosen for upscaling
+degraded jewelry images.
+
+QUALITY:
+- Excellent detail recovery
+
+SPEED:
+- Fast (~1–2 seconds per image)
+
+ARTIFACTS:
+- Minimal artifacts compared to older models
+
+REAL-WORLD HANDLING:
+- Trained on real degradations like blur, noise, and compression
+
+WHY NOT OTHER OPTIONS?
+
+- ESRGAN: Older version, less refined output
+- SwinIR: Slower inference with similar quality
+- SRCNN / FSRCNN: Lower quality, visible artifacts
+- Waifu2x: Optimized for anime, not real photos
+- Topaz Gigapixel: Commercial and not open-source
+
+KEY ADVANTAGES:
+1. Handles real-world degradations
+2. Native 4x upscaling with high fidelity
+3. Preserves metallic textures and fine jewelry details
+4. Actively maintained with good documentation
+
+
+--------------------------------------------------
+2. GENERATIVE ENHANCEMENT: STABLE DIFFUSION + CONTROLNET
+--------------------------------------------------
+
+WHY STABLE DIFFUSION?
+
+Stable Diffusion 1.5 combined with ControlNet Tile is used for generative
+refinement while preserving original structure.
+
+KEY BENEFITS:
+- Strong structure preservation using ControlNet
+- High-quality texture generation
+- Full control over prompts
+- Can be deployed locally on GPU
+
+WHY CONTROLNET TILE?
+
+ControlNet Tile is used to:
+- Maintain original structure
+- Preserve colors and shapes
+- Enhance details without hallucinating new elements
+
+WHY NOT OTHER OPTIONS?
+
+- DALL·E 3: API-only, expensive, limited control
+- Midjourney: No API, Discord-based
+- Stable Diffusion XL: Higher memory usage, unnecessary for enhancement
+- Pure img2img: Alters structure too much
+- GAN-based refiners: Less realistic results
+
+CONFIGURATION CHOICES:
+- Generation strength: 0.3 (preserves original)
+- Steps: 25 (balance between quality and speed)
+- Guidance scale: 8.0 (strong prompt adherence)
+
+PROMPT STRATEGY:
+Luxury jewelry, professional product photography,
+crystal clear, sharp focus, metallic shine,
+gemstone sparkle, high-end catalog quality
+
+
+--------------------------------------------------
+3. BACKGROUND REMOVAL: U2-NET (REMBG)
+--------------------------------------------------
+
+WHY U2-NET VIA REMBG?
+
+The rembg library uses U2-Net for accurate background removal.
+
+KEY BENEFITS:
+- Clean and sharp edges
+- Fast local inference
+- Free and open-source
+- Very accurate for product images
+
+WHY NOT OTHER OPTIONS?
+
+- Remove.bg: Paid cloud API with privacy concerns
+- MODNet: Optimized for portraits, not products
+- DeepLabV3: General segmentation, weaker edge quality
+- GrabCut: Requires manual input
+- Chroma keying: Needs controlled background
+
+KEY ADVANTAGES:
+1. Product-optimized segmentation
+2. Smooth alpha matte
+3. Fully local processing
+4. No manual intervention required
+
+
+--------------------------------------------------
+4. VISION LANGUAGE MODEL: MINICPM-V / LLAVA
+--------------------------------------------------
+
+WHY MINICPM-V OR LLAVA?
+
+MiniCPM-V and LLaVA are used through llama.cpp for local vision-language tasks.
+
+KEY BENEFITS:
+- Fully local deployment
+- No API costs
+- Better privacy
+- Low latency
+- Good classification accuracy
+
+MINICPM-V 2.6:
+- Compact size (~4GB quantized)
+- Strong visual reasoning
+- Runs on consumer GPUs
+
+LLAVA 1.6:
+- Strong image understanding
+- Well-documented
+- Multiple model sizes
+- Large community support
+
+WHY NOT OTHER OPTIONS?
+
+- GPT-4 Vision: Expensive and cloud-only
+- Claude Vision: Cloud-only
+- Gemini Vision: Cloud-only with rate limits
+- BLIP-2: Less conversational
+- Custom CNN: Requires training data and lacks flexibility
+
+USE CASES:
+1. Jewelry type classification
+2. Color detection
+3. Material analysis
+4. Style description
+
+PROMPT DIFFERENTIATION:
+WATCH:
+Is this a WATCH with a clock face that tells time?
+
+BRACELET:
+Is this a BRACELET? Decorative wrist jewelry without a clock face.
+
+
+--------------------------------------------------
+5. VIRTUAL TRY-ON IMPLEMENTATION
+--------------------------------------------------
+
+WHY SIMPLE PLACEMENT?
+
+A simple landmark-based placement approach is used instead of full AI try-on.
+
+BENEFITS:
+- Fast and reliable
+- Works offline
+- Low hardware requirements
+
+LIMITATIONS:
+- Less photorealistic integration
+
+WHY NOT FULL AI TRY-ON?
+
+- IDM-VTON / OOTDiffusion: Clothing-focused
+- DressCode / VITON-HD: Designed for apparel
+- 3D Rendering: Requires 3D jewelry models
+- AR-based solutions: High complexity
+
+CURRENT IMPLEMENTATION:
+1. Pre-generated person images (Pollination / Flux)
+2. MediaPipe landmark detection
+3. Alpha blending
+4. Type-based positioning:
+   - Rings: Finger
+   - Bracelet / Watch: Wrist
+   - Necklace: Neck / chest
+   - Earrings: Ear
+
+FUTURE IMPROVEMENTS:
+- Jewelry-specific datasets
+- AI-based try-on models
+- 3D reconstruction pipelines
+
+
+--------------------------------------------------
+6. SUMMARY
+--------------------------------------------------
+
+- Super-Resolution: Real-ESRGAN
+- Generative Enhancement: Stable Diffusion + ControlNet Tile
+- Background Removal: U2-Net (rembg)
+- Vision Language Model: MiniCPM-V / LLaVA
+- Virtual Try-On: MediaPipe-based placement
+
+DESIGN PHILOSOPHY:
+1. Local-first processing
+2. Open-source technologies
+3. Quality-focused decisions
+4. Practical and production-ready approach
+
+
+REFERENCES:
+- Real-ESRGAN: https://github.com/xinntao/Real-ESRGAN
+- Stable Diffusion: https://github.com/CompVis/stable-diffusion
+- ControlNet: https://github.com/lllyasviel/ControlNet
+- rembg: https://github.com/danielgatis/rembg
+- MiniCPM-V: https://github.com/OpenBMB/MiniCPM-V
+- LLaVA: https://github.com/haotian-liu/LLaVA
+- llama.cpp: https://github.com/ggerganov/llama.cpp
+- MediaPipe: https://github.com/google/mediapipe
+
