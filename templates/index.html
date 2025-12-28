@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VISION - AI Image Enhancement</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS VARIABLES & RESET
+           ============================================ */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #141416;
+            --bg-tertiary: #1c1c1f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a5;
+            --text-muted: #6b6b70;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --border: #2a2a2e;
+            --success: #10b981;
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           INTRO ANIMATION
+           ============================================ */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #intro-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .intro-logo {
+            font-family: var(--font-display);
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .intro-logo span {
+            display: inline-block;
+        }
+
+        .intro-logo .letter-o {
+            animation: dropIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation-delay: 0.3s;
+            opacity: 0;
+            transform: translateY(-200px);
+        }
+
+        @keyframes dropIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-200px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(10px);
+            }
+            80% {
+                transform: translateY(-5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================
+           MAIN APP CONTAINER
+           ============================================ */
+        #app {
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #app.visible {
+            opacity: 1;
+        }
+
+        /* ============================================
+           NAVBAR
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 48px;
+            z-index: 100;
+        }
+
+        .navbar-logo {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           PAGES CONTAINER
+           ============================================ */
+        .pages-container {
+            margin-top: 64px;
+            flex: 1;
+            position: relative;
+        }
+
+        .page {
+            display: none;
+            padding: 48px;
+            min-height: calc(100vh - 64px);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           PAGE 1: IMAGE SELECTION
+           ============================================ */
+        .selection-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .selection-header h1 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .selection-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+
+        .action-btn.active {
+            border-color: var(--accent);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .action-btn-icon {
+            font-size: 18px;
+        }
+
+        .action-btn-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Dataset Gallery */
+        .dataset-gallery {
+            display: none;
+            margin-bottom: 48px;
+        }
+
+        .dataset-gallery.visible {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .preview-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 360px;
+            border-radius: var(--radius-sm);
+            object-fit: contain;
+        }
+
+        .preview-placeholder {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .thumbnail-strip {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .thumbnail-strip::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .thumbnail-strip::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .thumbnail-strip::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .thumbnail {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            margin-right: 12px;
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            object-fit: cover;
+            vertical-align: middle;
+        }
+
+        .thumbnail:hover {
+            border-color: var(--text-muted);
+            transform: scale(1.05);
+        }
+
+        .thumbnail.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Upload Area */
+        .upload-area {
+            display: none;
+            margin-bottom: 48px;
+        }
+
+        .upload-area.visible {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .upload-dropzone {
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 64px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .upload-dropzone:hover {
+            border-color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+
+        .upload-dropzone.dragover {
+            border-color: var(--accent);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .upload-text {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .upload-hint {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        /* Proceed Button */
+        .proceed-container {
+            display: flex;
+            justify-content: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .proceed-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 48px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .proceed-btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .proceed-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ============================================
+           PAGE 2: ENHANCEMENT RESULTS
+           ============================================ */
+        .results-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .results-header h1 {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .results-header p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .comparison-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+
+        .comparison-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .comparison-label .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .comparison-label .dot.original {
+            background: #ef4444;
+        }
+
+        .comparison-label .dot.enhanced {
+            background: var(--success);
+        }
+
+        .comparison-image-container {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            border-radius: var(--radius-sm);
+            background: var(--bg-tertiary);
+        }
+
+        .comparison-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        .comparison-image.zoomed {
+            cursor: zoom-out;
+            transform: scale(2);
+        }
+
+        .zoom-controls {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            gap: 4px;
+            z-index: 5;
+        }
+
+        .zoom-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(10, 10, 11, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: var(--transition);
+            backdrop-filter: blur(8px);
+        }
+
+        .zoom-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--accent);
+        }
+
+        .zoom-indicator {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 11, 0.8);
+            color: var(--text-secondary);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: none;
+            backdrop-filter: blur(8px);
+        }
+
+        .comparison-image-container.zoomed .zoom-indicator {
+            display: block;
+        }
+
+        /* Before/After Slider */
+        .slider-section {
+            margin-bottom: 32px;
+        }
+
+        .slider-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .comparison-slider-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .comparison-slider {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .comparison-slider img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .comparison-slider .enhanced-img {
+            clip-path: inset(0 0 0 50%);
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: white;
+            cursor: ew-resize;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .slider-handle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .slider-handle::after {
+            content: '↔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: var(--bg-primary);
+            font-weight: bold;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+        }
+
+        /* Action Buttons */
+        .results-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .results-btn {
+            padding: 14px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .results-btn.primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .results-btn.primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .results-btn.secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .results-btn.secondary:hover {
+            background: var(--bg-secondary);
+            border-color: var(--text-muted);
+        }
+
+        /* Loading State */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 11, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .loading-overlay.visible {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 24px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .loading-subtext {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        /* ============================================
+           CLASSIFICATION BADGE
+           ============================================ */
+        .classification-badge {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .badge-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .badge-class {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .badge-confidence {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* ============================================
+           PAGE 3: VLM & TRY-ON
+           ============================================ */
+        .vlm-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .vlm-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .vlm-header {
+            margin-bottom: 24px;
+        }
+
+        .vlm-header h2 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .vlm-image-preview {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: var(--bg-tertiary);
+            margin-bottom: 16px;
+        }
+
+        .vlm-image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .vlm-responses {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .vlm-response-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+
+        .vlm-response-label {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .vlm-response-text {
+            color: var(--text-primary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .tryon-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: 100%;
+        }
+
+        .tryon-header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+
+        .tryon-header h2 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .tryon-main {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            flex: 1;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .tryon-main img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+        }
+
+        .tryon-placeholder {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .tryon-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .tryon-text {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .tryon-hint {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .tryon-images-grid {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .tryon-images-header {
+            margin-bottom: 8px;
+        }
+
+        .tryon-images-header h3 {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .tryon-images-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .tryon-images-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 8px;
+            max-width: 100%;
+        }
+
+        .tryon-image-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            background: var(--bg-tertiary);
+        }
+
+        .tryon-image-item:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .tryon-image-item.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .tryon-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tryon-image-loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .tryon-image-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .tryon-notice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+        }
+
+        .tryon-notice .notice-icon {
+            font-size: 16px;
+        }
+
+        .tryon-notice .notice-text {
+            font-size: 13px;
+            color: #f59e0b;
+            font-weight: 500;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 24px;
+            }
+
+            .page {
+                padding: 32px 24px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .intro-logo {
+                font-size: 48px;
+                letter-spacing: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Intro Animation -->
+    <div id="intro-screen">
+        <div class="intro-logo">
+            <span>V</span>
+            <span>I</span>
+            <span>S</span>
+            <span>I</span>
+            <span class="letter-o">O</span>
+            <span>N</span>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="navbar-logo">VISION</div>
+        </nav>
+
+        <!-- Pages Container -->
+        <div class="pages-container">
+            <!-- Page 1: Image Selection -->
+            <div id="page-selection" class="page active">
+                <div class="selection-header">
+                    <h1>Select an image to enhance</h1>
+                    <p>Choose from our dataset or upload your own jewelry image</p>
+                </div>
+
+                <div class="action-buttons">
+                    <div class="action-btn" id="btn-dataset">
+                        <div class="action-btn-icon">📁</div>
+                        <div class="action-btn-text">Select from Dataset</div>
+                    </div>
+                    <div class="action-btn" id="btn-upload">
+                        <div class="action-btn-icon">📤</div>
+                        <div class="action-btn-text">Upload Image</div>
+                    </div>
+                </div>
+
+                <!-- Dataset Gallery -->
+                <div class="dataset-gallery" id="dataset-gallery">
+                    <div class="preview-container">
+                        <img class="preview-image" id="preview-image" style="display: none;">
+                        <div class="preview-placeholder" id="preview-placeholder">
+                            Select an image from below
+                        </div>
+                    </div>
+                    <div class="thumbnail-strip" id="thumbnail-strip">
+                        <!-- Thumbnails will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Upload Area -->
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-dropzone" id="upload-dropzone">
+                        <div class="upload-icon">☁️</div>
+                        <div class="upload-text">Drag & drop an image here</div>
+                        <div class="upload-hint">or click to browse • PNG, JPG up to 10MB</div>
+                    </div>
+                    <input type="file" id="file-input" accept="image/*">
+                    <div class="preview-container" id="upload-preview-container" style="display: none; margin-top: 24px;">
+                        <img class="preview-image" id="upload-preview-image">
+                    </div>
+                </div>
+
+                <!-- Proceed Button -->
+                <div class="proceed-container">
+                    <button class="proceed-btn" id="proceed-btn" disabled>
+                        Proceed to Enhancement
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page 2: Enhancement Results -->
+            <div id="page-results" class="page">
+                <div class="results-header">
+                    <h1>Enhancement Complete</h1>
+                    <p>Your image has been enhanced using our AI pipeline</p>
+                </div>
+
+                <!-- Classification Badge -->
+                <div class="classification-badge" id="classification-badge" style="display: none;">
+                    <span class="badge-label">Detected:</span>
+                    <span class="badge-class" id="detected-class">-</span>
+                    <span class="badge-confidence" id="detected-confidence">-</span>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <div class="comparison-label">
+                            <span class="dot original"></span>
+                            Original
+                        </div>
+                        <div class="comparison-image-container" id="original-container">
+                            <img class="comparison-image" id="result-original" src="">
+                            <div class="zoom-controls">
+                                <button class="zoom-btn" id="zoom-in-original" title="Zoom In">🔍+</button>
+                                <button class="zoom-btn" id="zoom-out-original" title="Zoom Out">🔍-</button>
+                                <button class="zoom-btn" id="reset-zoom-original" title="Reset">↺</button>
+                            </div>
+                            <div class="zoom-indicator" id="zoom-indicator-original">2x</div>
+                        </div>
+                    </div>
+                    <div class="comparison-card">
+                        <div class="comparison-label">
+                            <span class="dot enhanced"></span>
+                            Enhanced
+                        </div>
+                        <div class="comparison-image-container" id="enhanced-container">
+                            <img class="comparison-image" id="result-enhanced" src="">
+                            <div class="zoom-controls">
+                                <button class="zoom-btn" id="zoom-in-enhanced" title="Zoom In">🔍+</button>
+                                <button class="zoom-btn" id="zoom-out-enhanced" title="Zoom Out">🔍-</button>
+                                <button class="zoom-btn" id="reset-zoom-enhanced" title="Reset">↺</button>
+                            </div>
+                            <div class="zoom-indicator" id="zoom-indicator-enhanced">2x</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slider-section">
+                    <div class="slider-title">Drag the slider to compare</div>
+                    <div class="comparison-slider-container">
+                        <div class="comparison-slider" id="comparison-slider">
+                            <img class="original-img" id="slider-original" src="">
+                            <img class="enhanced-img" id="slider-enhanced" src="">
+                            <div class="slider-handle" id="slider-handle"></div>
+                        </div>
+                        <div class="slider-labels">
+                            <span>← Original</span>
+                            <span>Enhanced →</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-actions">
+                    <button class="results-btn secondary" id="btn-back">
+                        ← Enhance Another
+                    </button>
+                    <button class="results-btn secondary" id="btn-download">
+                        Download Enhanced
+                    </button>
+                    <button class="results-btn primary" id="btn-view">
+                        Have a Look →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page 3: VLM & Virtual Try-On -->
+            <div id="page-vlm" class="page">
+                <div class="results-header">
+                    <h1>Jewelry Analysis & Try-On</h1>
+                    <p>AI-powered insights and virtual try-on experience</p>
+                </div>
+
+                <div class="vlm-layout">
+                    <!-- Left: VLM Responses (50% width) -->
+                    <div class="vlm-section">
+                        <div class="vlm-header">
+                            <h2>VLM Analysis</h2>
+                            <div class="vlm-image-preview">
+                                <img id="vlm-preview-image" src="" alt="Enhanced Jewelry">
+                            </div>
+                        </div>
+                        <div class="vlm-responses" id="vlm-responses">
+                            <div class="vlm-response-item">
+                                <div class="vlm-response-label">1. Jewelry Type:</div>
+                                <div class="vlm-response-text" id="vlm-response-1">Loading...</div>
+                            </div>
+                            <div class="vlm-response-item">
+                                <div class="vlm-response-label">2. Color:</div>
+                                <div class="vlm-response-text" id="vlm-response-2">Loading...</div>
+                            </div>
+                            <div class="vlm-response-item">
+                                <div class="vlm-response-label">3. Suitable Dress Code:</div>
+                                <div class="vlm-response-text" id="vlm-response-3">Loading...</div>
+                            </div>
+                            <div class="vlm-response-item">
+                                <div class="vlm-response-label">4. Material:</div>
+                                <div class="vlm-response-text" id="vlm-response-4">Loading...</div>
+                            </div>
+                            <div class="vlm-response-item">
+                                <div class="vlm-response-label">5. Occasions:</div>
+                                <div class="vlm-response-text" id="vlm-response-5">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Virtual Try-On (50% width) -->
+                    <div class="tryon-section">
+                        <!-- Under Development Notice - At Top -->
+                        <div class="tryon-notice">
+                            <span class="notice-icon">🚧</span>
+                            <span class="notice-text">Virtual Try-On is still under development. Results may vary.</span>
+                        </div>
+                        
+                        <!-- Try-On Result Display -->
+                        <div class="tryon-main" id="tryon-main">
+                            <div class="tryon-placeholder">
+                                <div class="tryon-icon">💎</div>
+                                <div class="tryon-text">Virtual Try-On</div>
+                                <div class="tryon-hint">Select a person image below to see how it looks</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pre-generated Person Images -->
+                        <div class="tryon-images-grid" id="tryon-images-grid">
+                            <div class="tryon-images-header">
+                                <h3>Try-On Options</h3>
+                                <p>Click any image to see how the jewelry looks</p>
+                            </div>
+                            <div class="tryon-images-container" id="tryon-images-container">
+                                <!-- 5 images will be loaded here dynamically -->
+                                <div class="tryon-image-loading">Loading try-on images...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-actions">
+                    <button class="results-btn secondary" id="btn-back-vlm">
+                        ← Back to Results
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Enhancing your image...</div>
+        <div class="loading-subtext">This may take a few seconds</div>
+    </div>
+
+    <script>
+        // ============================================
+        // STATE
+        // ============================================
+        const state = {
+            selectedImage: null,
+            selectedFilename: null,
+            uploadedImageData: null,
+            originalImageData: null,  // Original image for VLM classification
+            enhancedImageData: null,  // For display (object on white background)
+            enhancedObjectData: null,  // For try-on (object with transparency)
+            detectedClass: null,  // Set by VLM on Page 3
+            personImageData: null  // For virtual try-on
+        };
+
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
+        const elements = {
+            introScreen: document.getElementById('intro-screen'),
+            app: document.getElementById('app'),
+            pageSelection: document.getElementById('page-selection'),
+            pageResults: document.getElementById('page-results'),
+            btnDataset: document.getElementById('btn-dataset'),
+            btnUpload: document.getElementById('btn-upload'),
+            datasetGallery: document.getElementById('dataset-gallery'),
+            uploadArea: document.getElementById('upload-area'),
+            thumbnailStrip: document.getElementById('thumbnail-strip'),
+            previewImage: document.getElementById('preview-image'),
+            previewPlaceholder: document.getElementById('preview-placeholder'),
+            uploadDropzone: document.getElementById('upload-dropzone'),
+            fileInput: document.getElementById('file-input'),
+            uploadPreviewContainer: document.getElementById('upload-preview-container'),
+            uploadPreviewImage: document.getElementById('upload-preview-image'),
+            proceedBtn: document.getElementById('proceed-btn'),
+            resultOriginal: document.getElementById('result-original'),
+            resultEnhanced: document.getElementById('result-enhanced'),
+            sliderOriginal: document.getElementById('slider-original'),
+            sliderEnhanced: document.getElementById('slider-enhanced'),
+            sliderHandle: document.getElementById('slider-handle'),
+            comparisonSlider: document.getElementById('comparison-slider'),
+            btnBack: document.getElementById('btn-back'),
+            btnDownload: document.getElementById('btn-download'),
+            btnView: document.getElementById('btn-view'),
+            pageVlm: document.getElementById('page-vlm'),
+            btnBackVlm: document.getElementById('btn-back-vlm'),
+            classificationBadge: document.getElementById('classification-badge'),
+            detectedClass: document.getElementById('detected-class'),
+            detectedConfidence: document.getElementById('detected-confidence'),
+            loadingOverlay: document.getElementById('loading-overlay')
+        };
+
+        // ============================================
+        // INTRO ANIMATION
+        // ============================================
+        function runIntroAnimation() {
+            setTimeout(() => {
+                elements.introScreen.classList.add('hidden');
+                setTimeout(() => {
+                    elements.app.classList.add('visible');
+                }, 400);
+            }, 2000);
+        }
+
+        // ============================================
+        // PAGE NAVIGATION
+        // ============================================
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // ============================================
+        // DATASET GALLERY
+        // ============================================
+        async function loadDataset() {
+            try {
+                const response = await fetch('/api/dataset');
+                const images = await response.json();
+                
+                elements.thumbnailStrip.innerHTML = '';
+                
+                images.forEach(img => {
+                    const thumb = document.createElement('img');
+                    thumb.className = 'thumbnail';
+                    thumb.src = img.path;
+                    thumb.alt = img.name;
+                    thumb.dataset.filename = img.name;
+                    thumb.onclick = () => selectDatasetImage(img, thumb);
+                    elements.thumbnailStrip.appendChild(thumb);
+                });
+            } catch (error) {
+                console.error('Failed to load dataset:', error);
+            }
+        }
+
+        function selectDatasetImage(img, thumbElement) {
+            // Update selection state
+            state.selectedImage = img.path;
+            state.selectedFilename = img.name;
+            state.uploadedImageData = null;
+
+            // Update UI
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('selected'));
+            thumbElement.classList.add('selected');
+
+            elements.previewImage.src = img.path;
+            elements.previewImage.style.display = 'block';
+            elements.previewPlaceholder.style.display = 'none';
+
+            updateProceedButton();
+        }
+
+        // ============================================
+        // FILE UPLOAD
+        // ============================================
+        function setupUpload() {
+            const dropzone = elements.uploadDropzone;
+
+            dropzone.onclick = () => elements.fileInput.click();
+
+            dropzone.ondragover = (e) => {
+                e.preventDefault();
+                dropzone.classList.add('dragover');
+            };
+
+            dropzone.ondragleave = () => {
+                dropzone.classList.remove('dragover');
+            };
+
+            dropzone.ondrop = (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+                if (e.dataTransfer.files.length) {
+                    handleFileSelect(e.dataTransfer.files[0]);
+                }
+            };
+
+            elements.fileInput.onchange = (e) => {
+                if (e.target.files.length) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            };
+        }
+
+        function handleFileSelect(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                state.uploadedImageData = e.target.result;
+                state.selectedImage = null;
+                state.selectedFilename = null;
+
+                elements.uploadPreviewImage.src = e.target.result;
+                elements.uploadPreviewContainer.style.display = 'flex';
+
+                updateProceedButton();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ============================================
+        // PROCEED & ENHANCEMENT
+        // ============================================
+        function updateProceedButton() {
+            const hasSelection = state.selectedImage || state.uploadedImageData;
+            elements.proceedBtn.disabled = !hasSelection;
+        }
+
+        async function proceedToEnhancement() {
+            elements.loadingOverlay.classList.add('visible');
+
+            try {
+                const payload = {};
+                
+                if (state.selectedFilename) {
+                    payload.filename = state.selectedFilename;
+                } else if (state.uploadedImageData) {
+                    payload.image_data = state.uploadedImageData;
+                }
+
+                // NO classification check here - VLM will classify on Page 3
+                // Directly proceed with enhancement
+                const response = await fetch('/api/enhance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                // Store original image for VLM classification on Page 3
+                if (result.original) {
+                    state.originalImageData = result.original;
+                    elements.resultOriginal.src = result.original;
+                    elements.sliderOriginal.src = result.original;
+                }
+                
+                // Store enhanced images
+                if (result.enhanced) {
+                    state.enhancedImageData = result.enhanced;
+                    elements.resultEnhanced.src = result.enhanced;
+                    elements.sliderEnhanced.src = result.enhanced;
+                }
+                
+                if (result.enhanced_object) {
+                    state.enhancedObjectData = result.enhanced_object;
+                }
+
+                // Classification will be done by VLM on Page 3
+                state.detectedClass = null;
+                
+                // Hide classification badge on Page 2 (VLM will classify on Page 3)
+                if (elements.classificationBadge) {
+                    elements.classificationBadge.style.display = 'none';
+                }
+
+                // Navigate to results
+                showPage('page-results');
+                initComparisonSlider();
+                initZoomControls();
+
+            } catch (error) {
+                console.error('Enhancement failed:', error);
+                alert('Enhancement failed: ' + error.message);
+            } finally {
+                elements.loadingOverlay.classList.remove('visible');
+            }
+        }
+
+        // ============================================
+        // VIRTUAL TRY-ON
+        // ============================================
+        async function setupVirtualTryOn() {
+            // Try-on images are loaded AFTER VLM classification
+            // This function is called when navigating to Page 3
+            // VLM will classify and then load try-on images
+            
+            // If class already detected (from VLM), load images
+            if (state.detectedClass && state.detectedClass !== 'UNKNOWN') {
+                await loadTryOnImages(state.detectedClass);
+            } else {
+                // VLM will handle classification and load images
+                showTryOnPlaceholder('Waiting for VLM classification...');
+            }
+        }
+        
+        async function loadTryOnImages(jewelryType) {
+            const container = document.getElementById('tryon-images-container');
+            container.innerHTML = '<div class="tryon-image-loading">Loading try-on images...</div>';
+            
+            try {
+                const response = await fetch(`/api/tryon-images/${jewelryType}`);
+                const data = await response.json();
+                
+                if (!data.images || data.images.length === 0) {
+                    container.innerHTML = `
+                        <div class="tryon-image-empty">
+                            No try-on images found for ${jewelryType}.<br>
+                            <small>Add images to: data/tryon-images/${jewelryType}/</small>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Display images
+                container.innerHTML = '';
+                data.images.forEach((img, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'tryon-image-item';
+                    item.dataset.imagePath = img.path;
+                    item.dataset.imageName = img.name;
+                    
+                    const imgEl = document.createElement('img');
+                    imgEl.src = img.path;
+                    imgEl.alt = img.name;
+                    imgEl.loading = 'lazy';
+                    
+                    item.appendChild(imgEl);
+                    item.onclick = () => {
+                        // Remove previous selection
+                        document.querySelectorAll('.tryon-image-item').forEach(el => {
+                            el.classList.remove('selected');
+                        });
+                        // Select this image
+                        item.classList.add('selected');
+                        // Load try-on with this image
+                        loadVirtualTryOn(img.path);
+                    };
+                    
+                    container.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Failed to load try-on images:', error);
+                container.innerHTML = `
+                    <div class="tryon-image-empty">
+                        Failed to load try-on images.<br>
+                        <small>${error.message}</small>
+                    </div>
+                `;
+            }
+        }
+        
+        async function loadVirtualTryOn(personImagePath) {
+            if (!state.enhancedImageData) {
+                console.error('No enhanced image available');
+                showTryOnPlaceholder('No enhanced image available');
+                return;
+            }
+            
+            if (!personImagePath) {
+                showTryOnPlaceholder('Select a person image below');
+                return;
+            }
+            
+            // Show loading
+            const tryonMain = document.getElementById('tryon-main');
+            tryonMain.innerHTML = `
+                <div class="tryon-placeholder">
+                    <div class="loading-spinner" style="width: 32px; height: 32px; margin: 0 auto 16px;"></div>
+                    <div class="tryon-text">Processing Try-On...</div>
+                </div>
+            `;
+            
+            try {
+                // Load person image
+                const personImageResponse = await fetch(personImagePath);
+                const personImageBlob = await personImageResponse.blob();
+                const personImageReader = new FileReader();
+                
+                personImageReader.onload = async (e) => {
+                    const personImageData = e.target.result;
+                    
+                    // Use enhanced object (with transparency) or fallback to enhanced display
+                    const jewelryData = state.enhancedObjectData || state.enhancedImageData;
+                    if (!jewelryData) {
+                        throw new Error('No enhanced image available');
+                    }
+                    
+                    // Extract base64 data (remove data:image/png;base64, prefix)
+                    const jewelryBase64 = jewelryData.includes(',') ? jewelryData.split(',')[1] : jewelryData;
+                    const personBase64 = personImageData.includes(',') ? personImageData.split(',')[1] : personImageData;
+                    
+                    console.log('Sending try-on request:', {
+                        jewelry_type: state.detectedClass,
+                        jewelry_size: jewelryBase64.length,
+                        person_size: personBase64.length
+                    });
+                    
+                    // Call try-on API with simple method (faster, more reliable)
+                    const response = await fetch('/api/tryon', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            jewelry_image: jewelryBase64,
+                            person_image: personBase64,
+                            jewelry_type: state.detectedClass || 'UNKNOWN',
+                            method: 'simple'  // Use simple method for reliability
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success && result.result_image) {
+                        // Display result
+                        displayTryOnResult(result.result_image);
+                    } else {
+                        throw new Error(result.error || 'Try-on failed');
+                    }
+                };
+                
+                personImageReader.readAsDataURL(personImageBlob);
+                
+            } catch (error) {
+                console.error('Try-on failed:', error);
+                showTryOnError(error.message);
+            }
+        }
+        
+        function displayTryOnResult(resultImageSrc) {
+            const tryonMain = document.getElementById('tryon-main');
+            
+            const img = document.createElement('img');
+            img.src = resultImageSrc;
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+            img.style.objectFit = 'contain';
+            img.style.borderRadius = 'var(--radius-sm)';
+            img.onerror = function() {
+                console.error('Failed to load try-on result image');
+                showTryOnError('Failed to display try-on result');
+            };
+            
+            // Add download button
+            const downloadBtn = document.createElement('button');
+            downloadBtn.className = 'results-btn primary';
+            downloadBtn.style.marginTop = '12px';
+            downloadBtn.style.width = '100%';
+            downloadBtn.textContent = 'Download Try-On Result';
+            downloadBtn.onclick = () => {
+                const link = document.createElement('a');
+                link.href = resultImageSrc;
+                link.download = `tryon_${state.detectedClass || 'jewelry'}_${Date.now()}.png`;
+                link.click();
+            };
+            
+            const container = document.createElement('div');
+            container.style.display = 'flex';
+            container.style.flexDirection = 'column';
+            container.style.height = '100%';
+            container.style.alignItems = 'center';
+            container.style.justifyContent = 'center';
+            
+            const imgContainer = document.createElement('div');
+            imgContainer.style.flex = '1';
+            imgContainer.style.display = 'flex';
+            imgContainer.style.alignItems = 'center';
+            imgContainer.style.justifyContent = 'center';
+            imgContainer.style.width = '100%';
+            imgContainer.style.overflow = 'hidden';
+            imgContainer.appendChild(img);
+            
+            container.appendChild(imgContainer);
+            container.appendChild(downloadBtn);
+            
+            tryonMain.innerHTML = '';
+            tryonMain.appendChild(container);
+        }
+        
+        function showTryOnPlaceholder(message) {
+            const tryonMain = document.getElementById('tryon-main');
+            tryonMain.innerHTML = `
+                <div class="tryon-placeholder">
+                    <div class="tryon-icon">💎</div>
+                    <div class="tryon-text">Virtual Try-On</div>
+                    <div class="tryon-hint">${message}</div>
+                </div>
+            `;
+        }
+        
+        function showTryOnError(message) {
+            const tryonMain = document.getElementById('tryon-main');
+            tryonMain.innerHTML = `
+                <div class="tryon-placeholder">
+                    <div class="tryon-icon">⚠️</div>
+                    <div class="tryon-text">Try-On Failed</div>
+                    <div class="tryon-hint">${message}</div>
+                </div>
+            `;
+        }
+        
+        // ============================================
+        // VLM & PAGE 3
+        // ============================================
+        async function loadVlmResponses() {
+            // VLM uses ORIGINAL image for classification
+            if (!state.originalImageData) {
+                console.error('No original image data available for VLM');
+                return;
+            }
+
+            const vlmResponses = document.querySelectorAll('[id^="vlm-response-"]');
+            vlmResponses.forEach(el => {
+                el.textContent = 'Loading...';
+            });
+            
+            // Show loading in try-on section
+            showTryOnPlaceholder('Detecting jewelry type...');
+
+            try {
+                // Send ORIGINAL image to VLM for classification
+                const response = await fetch('/api/vlm', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        original_image: state.originalImageData  // Use original for classification
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Store detected class from VLM
+                    state.detectedClass = result.detected_class || 'UNKNOWN';
+                    console.log('VLM detected class:', state.detectedClass);
+                    
+                    // Update VLM responses
+                    if (result.responses && result.responses.length >= 5) {
+                        for (let i = 0; i < 5; i++) {
+                            const el = document.getElementById(`vlm-response-${i + 1}`);
+                            if (el) {
+                                el.textContent = result.responses[i];
+                            }
+                        }
+                    }
+                    
+                    // NOW load try-on images based on VLM classification
+                    if (state.detectedClass && state.detectedClass !== 'UNKNOWN') {
+                        await loadTryOnImages(state.detectedClass);
+                    } else {
+                        showTryOnPlaceholder('Could not detect jewelry type');
+                    }
+                } else {
+                    // Use fallback responses
+                    const fallback = [
+                        'This appears to be a piece of jewelry.',
+                        'The color analysis is being processed.',
+                        'Suitable for various dress codes.',
+                        'Material composition analysis in progress.',
+                        'Can be worn on multiple occasions.'
+                    ];
+                    for (let i = 0; i < 5; i++) {
+                        const el = document.getElementById(`vlm-response-${i + 1}`);
+                        if (el) {
+                            el.textContent = fallback[i] + ' (VLM service unavailable)';
+                        }
+                    }
+                    showTryOnPlaceholder('VLM service unavailable');
+                }
+            } catch (error) {
+                console.error('VLM request failed:', error);
+                // Show fallback
+                const fallback = [
+                    'Jewelry type analysis unavailable.',
+                    'Color analysis unavailable.',
+                    'Dress code suggestions unavailable.',
+                    'Material analysis unavailable.',
+                    'Occasion suggestions unavailable.'
+                ];
+                for (let i = 0; i < 5; i++) {
+                    const el = document.getElementById(`vlm-response-${i + 1}`);
+                    if (el) {
+                        el.textContent = fallback[i];
+                    }
+                }
+                showTryOnPlaceholder('VLM request failed');
+            }
+        }
+
+        // ============================================
+        // ZOOM FUNCTIONALITY
+        // ============================================
+        function initZoomControls() {
+            // Zoom state for each image
+            const zoomState = {
+                original: { scale: 1, maxScale: 4 },
+                enhanced: { scale: 1, maxScale: 4 }
+            };
+
+            function updateZoom(imageId, scale) {
+                const img = document.getElementById(imageId);
+                const container = document.getElementById(imageId === 'result-original' ? 'original-container' : 'enhanced-container');
+                const indicator = document.getElementById(imageId === 'result-original' ? 'zoom-indicator-original' : 'zoom-indicator-enhanced');
+                const state = zoomState[imageId === 'result-original' ? 'original' : 'enhanced'];
+                
+                state.scale = Math.max(1, Math.min(scale, state.maxScale));
+                img.style.transform = `scale(${state.scale})`;
+                
+                if (state.scale > 1) {
+                    img.classList.add('zoomed');
+                    container.classList.add('zoomed');
+                    indicator.textContent = `${state.scale}x`;
+                } else {
+                    img.classList.remove('zoomed');
+                    container.classList.remove('zoomed');
+                }
+            }
+
+            function zoomIn(imageId) {
+                const state = zoomState[imageId === 'result-original' ? 'original' : 'enhanced'];
+                updateZoom(imageId, state.scale * 1.5);
+            }
+
+            function zoomOut(imageId) {
+                const state = zoomState[imageId === 'result-original' ? 'original' : 'enhanced'];
+                updateZoom(imageId, state.scale / 1.5);
+            }
+
+            function resetZoom(imageId) {
+                updateZoom(imageId, 1);
+            }
+
+            // Original image zoom controls
+            document.getElementById('zoom-in-original').onclick = () => zoomIn('result-original');
+            document.getElementById('zoom-out-original').onclick = () => zoomOut('result-original');
+            document.getElementById('reset-zoom-original').onclick = () => resetZoom('result-original');
+
+            // Enhanced image zoom controls
+            document.getElementById('zoom-in-enhanced').onclick = () => zoomIn('result-enhanced');
+            document.getElementById('zoom-out-enhanced').onclick = () => zoomOut('result-enhanced');
+            document.getElementById('reset-zoom-enhanced').onclick = () => resetZoom('result-enhanced');
+
+            // Click to zoom on images (toggle between 1x and 2x)
+            document.getElementById('result-original').onclick = (e) => {
+                const state = zoomState.original;
+                if (state.scale === 1) {
+                    updateZoom('result-original', 2);
+                } else {
+                    resetZoom('result-original');
+                }
+            };
+
+            document.getElementById('result-enhanced').onclick = (e) => {
+                const state = zoomState.enhanced;
+                if (state.scale === 1) {
+                    updateZoom('result-enhanced', 2);
+                } else {
+                    resetZoom('result-enhanced');
+                }
+            };
+
+            // Mouse wheel zoom
+            document.getElementById('original-container').onwheel = (e) => {
+                e.preventDefault();
+                const state = zoomState.original;
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                updateZoom('result-original', state.scale * delta);
+            };
+
+            document.getElementById('enhanced-container').onwheel = (e) => {
+                e.preventDefault();
+                const state = zoomState.enhanced;
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                updateZoom('result-enhanced', state.scale * delta);
+            };
+        }
+
+        // ============================================
+        // COMPARISON SLIDER
+        // ============================================
+        function initComparisonSlider() {
+            const slider = elements.comparisonSlider;
+            const handle = elements.sliderHandle;
+            const enhancedImg = elements.sliderEnhanced;
+            
+            let isDragging = false;
+
+            function updateSlider(x) {
+                const rect = slider.getBoundingClientRect();
+                let percent = ((x - rect.left) / rect.width) * 100;
+                percent = Math.max(0, Math.min(100, percent));
+                
+                handle.style.left = percent + '%';
+                enhancedImg.style.clipPath = `inset(0 0 0 ${percent}%)`;
+            }
+
+            handle.onmousedown = (e) => {
+                isDragging = true;
+                e.preventDefault();
+            };
+
+            document.onmousemove = (e) => {
+                if (isDragging) {
+                    updateSlider(e.clientX);
+                }
+            };
+
+            document.onmouseup = () => {
+                isDragging = false;
+            };
+
+            // Touch support
+            handle.ontouchstart = (e) => {
+                isDragging = true;
+            };
+
+            document.ontouchmove = (e) => {
+                if (isDragging && e.touches.length) {
+                    updateSlider(e.touches[0].clientX);
+                }
+            };
+
+            document.ontouchend = () => {
+                isDragging = false;
+            };
+
+            // Click anywhere on slider
+            slider.onclick = (e) => {
+                if (e.target !== handle) {
+                    updateSlider(e.clientX);
+                }
+            };
+        }
+
+        // ============================================
+        // DOWNLOAD
+        // ============================================
+        function downloadEnhanced() {
+            if (!state.enhancedImageData) return;
+
+            const link = document.createElement('a');
+            link.href = state.enhancedImageData;
+            link.download = 'enhanced_jewelry.png';
+            link.click();
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        function setupEventListeners() {
+            // Dataset button
+            elements.btnDataset.onclick = () => {
+                elements.btnDataset.classList.add('active');
+                elements.btnUpload.classList.remove('active');
+                elements.datasetGallery.classList.add('visible');
+                elements.uploadArea.classList.remove('visible');
+                loadDataset();
+            };
+
+            // Upload button
+            elements.btnUpload.onclick = () => {
+                elements.btnUpload.classList.add('active');
+                elements.btnDataset.classList.remove('active');
+                elements.uploadArea.classList.add('visible');
+                elements.datasetGallery.classList.remove('visible');
+            };
+
+            // Proceed button
+            elements.proceedBtn.onclick = proceedToEnhancement;
+
+            // Back button
+            elements.btnBack.onclick = () => {
+                showPage('page-selection');
+                // Reset state
+                state.selectedImage = null;
+                state.selectedFilename = null;
+                state.uploadedImageData = null;
+                elements.previewImage.style.display = 'none';
+                elements.previewPlaceholder.style.display = 'block';
+                elements.uploadPreviewContainer.style.display = 'none';
+                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('selected'));
+                updateProceedButton();
+            };
+
+            // Download button
+            elements.btnDownload.onclick = downloadEnhanced;
+
+            // View button (go to page 3)
+            elements.btnView.onclick = () => {
+                // Set VLM preview image
+                const vlmPreview = document.getElementById('vlm-preview-image');
+                if (vlmPreview && state.enhancedImageData) {
+                    vlmPreview.src = state.enhancedImageData;
+                }
+                showPage('page-vlm');
+                loadVlmResponses();
+                setupVirtualTryOn();  // Load try-on images based on detected class
+            };
+
+            // Back from VLM page
+            elements.btnBackVlm.onclick = () => {
+                showPage('page-results');
+            };
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        function init() {
+            setupEventListeners();
+            setupUpload();
+            runIntroAnimation();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+

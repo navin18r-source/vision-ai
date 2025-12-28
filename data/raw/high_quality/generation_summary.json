@@ -1,0 +1,34 @@
+{
+  "success": [
+    "SET_001",
+    "SET_002",
+    "SET_003",
+    "SET_004"
+  ],
+  "failed": [
+    {
+      "id": "SET_005",
+      "error": "502 Server Error: Bad Gateway for url: https://image.pollinations.ai/prompt/Vintage%20jewelry%20box%20contents%2C%20assorted%20antique%20pieces%20cameos%20brooches%20rings%2C%20aged%20patina%2C%20velvet%20lined%20wooden%20box%2C%20nostalgic%20warm%20lighting%2C%20estate%20jewelry%20photography%2C%20treasure%20collection?width=1024&height=1024&model=black-forest-labs/FLUX.1-dev&nologo=true"
+    },
+    {
+      "id": "SET_006",
+      "error": "502 Server Error: Bad Gateway for url: https://image.pollinations.ai/prompt/Minimalist%20jewelry%20set%2C%20matching%20simple%20gold%20necklace%20earrings%20and%20ring%2C%20modern%20design%2C%20clean%20white%20background%2C%20contemporary%20jewelry%20photography%2C%20cohesive%20collection%20aesthetic?width=1024&height=1024&model=black-forest-labs/FLUX.1-dev&nologo=true"
+    },
+    {
+      "id": "SET_007",
+      "error": "502 Server Error: Bad Gateway for url: https://image.pollinations.ai/prompt/Diamond%20jewelry%20suite%2C%20matching%20diamond%20necklace%20earrings%20bracelet%20and%20ring%2C%2018k%20white%20gold%2C%20luxury%20presentation%20box%2C%20glamorous%20lighting%2C%20complete%20diamond%20collection%2C%20high-end%20advertisement?width=1024&height=1024&model=black-forest-labs/FLUX.1-dev&nologo=true"
+    },
+    {
+      "id": "SET_008",
+      "error": "502 Server Error: Bad Gateway for url: https://image.pollinations.ai/prompt/Bohemian%20jewelry%20collection%2C%20layered%20necklaces%20rings%20and%20bracelets%20mixed%20metals%20and%20stones%2C%20eclectic%20boho%20style%2C%20natural%20wood%20and%20plant%20background%2C%20free%20spirit%20aesthetic%2C%20lifestyle%20photography?width=1024&height=1024&model=black-forest-labs/FLUX.1-dev&nologo=true"
+    },
+    {
+      "id": "SET_009",
+      "error": "502 Server Error: Bad Gateway for url: https://image.pollinations.ai/prompt/Mens%20jewelry%20set%2C%20watch%20cufflinks%20and%20ring%20matching%20set%2C%20silver%20and%20onyx%2C%20masculine%20presentation%2C%20dark%20leather%20and%20wood%20background%2C%20sophisticated%20mens%20accessories%20photography?width=1024&height=1024&model=black-forest-labs/FLUX.1-dev&nologo=true"
+    },
+    {
+      "id": "SET_010",
+      "error": "502 Server Error: Bad Gateway for url: https://image.pollinations.ai/prompt/Rose%20gold%20jewelry%20collection%2C%20matching%20rose%20gold%20pieces%20with%20morganite%20stones%2C%20romantic%20blush%20aesthetic%2C%20soft%20pink%20marble%20background%2C%20feminine%20luxury%20set%2C%20cohesive%20brand%20photography?width=1024&height=1024&model=black-forest-labs/FLUX.1-dev&nologo=true"
+    }
+  ]
+}

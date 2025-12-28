@@ -1,0 +1,388 @@
+================================================================================
+                    FLUX JEWELRY DATASET - 90 IMAGE PROMPTS
+                    Complete Prompt Collection for High-Quality Generation
+================================================================================
+
+CATEGORIES BREAKDOWN:
+- Rings: 20 images
+- Necklaces/Pendants: 18 images
+- Earrings: 16 images
+- Bracelets: 14 images
+- Watches: 12 images
+- Mixed/Sets: 10 images
+TOTAL: 90 images
+
+BACKGROUNDS VARIETY:
+- White studio (clean e-commerce)
+- Black/Dark velvet (luxury feel)
+- Marble surface (elegant)
+- Gradient backgrounds
+- Soft fabric/silk
+- Natural elements (flowers, leaves)
+- Reflective surfaces
+
+================================================================================
+                              RINGS (20 IMAGES)
+================================================================================
+
+RING_001
+Professional product photography of luxury diamond solitaire engagement ring, round brilliant cut diamond, platinum band, clean white studio background, soft studio lighting with reflections, 8k resolution, commercial jewelry photography, sharp focus on diamond facets
+
+RING_002
+Elegant rose gold engagement ring with oval morganite center stone surrounded by diamond halo, placed on black velvet surface, dramatic lighting highlighting pink gemstone, luxury jewelry advertisement, ultra detailed, 8k commercial quality
+
+RING_003
+Minimalist 18k yellow gold wedding band with brushed matte finish, simple and elegant design, white marble surface background, soft natural lighting, professional product photo, clean aesthetic, high detail macro shot
+
+RING_004
+Vintage art deco diamond ring with emerald cut center stone and baguette side stones, platinum setting, gradient gray to white background, studio lighting with sparkle effects, luxury vintage jewelry photography, 8k detail
+
+RING_005
+Three stone diamond anniversary ring, round brilliant cuts, 14k white gold setting, placed on soft pink silk fabric, romantic lighting, commercial jewelry catalog style, sharp focus, professional product photography
+
+RING_006
+Men's tungsten carbide wedding band with carbon fiber inlay, modern masculine design, dark slate background, dramatic side lighting, contemporary jewelry photography, 8k resolution, sharp industrial aesthetic
+
+RING_007
+Sapphire and diamond cluster cocktail ring, deep blue Ceylon sapphire center, 18k white gold, scattered smaller diamonds, luxurious dark purple velvet background, glamorous lighting, high-end jewelry advertisement
+
+RING_008
+Delicate stackable rings set of three, mixed metals rose gold yellow gold and silver, thin minimalist bands with tiny diamonds, white background with soft shadows, modern jewelry photography, lifestyle product shot
+
+RING_009
+Ruby eternity band, deep red natural rubies all around, 18k yellow gold setting, placed on cream marble surface, warm golden lighting, luxury gemstone jewelry, professional macro photography, 8k detail
+
+RING_010
+Princess cut diamond engagement ring with split shank pave band, 2 carat center stone, platinum setting, clean white studio background, bright lighting showcasing fire and brilliance, commercial jewelry photography
+
+RING_011
+Antique Victorian style opal ring, iridescent Australian opal cabochon, ornate gold filigree setting, vintage lace fabric background, soft dreamy lighting, artistic jewelry photography, romantic aesthetic
+
+RING_012
+Modern geometric diamond ring, hexagonal setting with trillion cut diamond, 14k rose gold, minimalist concrete gray background, architectural lighting, contemporary jewelry design, editorial style photography
+
+RING_013
+Emerald cut emerald ring with tapered baguette diamond sides, Colombian emerald deep green, platinum setting, black velvet background with single spotlight, dramatic luxury photography, 8k resolution
+
+RING_014
+Pearl and diamond ring, large South Sea white pearl center, diamond accented band, 18k white gold, soft blue gradient background, elegant lighting, classic jewelry photography style
+
+RING_015
+Wide cigar band ring with pave diamonds covering entire surface, 18k yellow gold, luxurious and bold design, reflective black surface background, glamorous lighting with sparkles, statement jewelry photography
+
+RING_016
+Aquamarine cocktail ring, large emerald cut pale blue aquamarine, 14k white gold with diamond accents, beach sand and seashell background, natural daylight aesthetic, lifestyle jewelry photography
+
+RING_017
+Black diamond engagement ring, 1.5 carat round black diamond center, rose gold band with white diamond halo, moody dark gray background, edgy modern lighting, contemporary luxury jewelry
+
+RING_018
+Twisted infinity design diamond ring, intertwined bands of white and yellow gold with pave diamonds, symbolic eternal love design, soft white fabric background, romantic soft lighting, engagement jewelry photography
+
+RING_019
+Cushion cut morganite ring with double halo, blush pink gemstone, rose gold setting, pink peony flower petals background, feminine romantic lighting, bridal jewelry advertisement, 8k detail
+
+RING_020
+Channel set diamond wedding band, princess cut diamonds in continuous row, platinum, clean minimal white background, crisp studio lighting, classic elegant jewelry photography, sharp focus throughout
+
+
+================================================================================
+                         NECKLACES/PENDANTS (18 IMAGES)
+================================================================================
+
+NECKLACE_001
+Diamond tennis necklace, continuous line of round brilliant diamonds, 18k white gold, 15 carats total weight, draped on white marble bust form, studio lighting creating sparkle effects, luxury jewelry advertisement, 8k commercial photography
+
+NECKLACE_002
+Simple gold chain necklace, delicate cable link design, 14k yellow gold, laying flat on soft cream linen fabric, warm natural lighting, minimalist jewelry photography, everyday luxury aesthetic
+
+NECKLACE_003
+Pearl strand necklace, classic Akoya pearls with high luster, 18 inch length with gold clasp, black velvet jewelry box background, elegant classic lighting, timeless jewelry photography, commercial quality
+
+NECKLACE_004
+Diamond solitaire pendant, round brilliant diamond in bezel setting, platinum chain, floating on gradient blue to white background, clean modern lighting, minimalist luxury jewelry, 8k detail
+
+NECKLACE_005
+Layered gold necklace set, three chains of different lengths with small charms, 14k gold vermeil, model neck silhouette shadow background, trendy lifestyle jewelry photography, modern aesthetic
+
+NECKLACE_006
+Emerald pendant necklace, pear shaped Colombian emerald surrounded by diamond halo, 18k yellow gold chain, deep green velvet background, rich dramatic lighting, high-end gemstone jewelry photography
+
+NECKLACE_007
+Heart shaped diamond pendant, pave set diamonds covering entire heart, rose gold chain, soft pink gradient background, romantic Valentine aesthetic, love jewelry advertisement, sparkling detail
+
+NECKLACE_008
+Vintage locket pendant, ornate engraved oval gold locket on long chain, antique brass finish, aged paper and dried flowers background, nostalgic warm lighting, heritage jewelry photography
+
+NECKLACE_009
+Tahitian black pearl pendant, large baroque pearl with natural overtones, sterling silver contemporary setting, charcoal gray textured background, modern sophisticated lighting, luxury pearl jewelry
+
+NECKLACE_010
+Cross pendant necklace, diamond encrusted cross, 14k white gold, clean white background with soft shadow, faith jewelry photography, elegant religious symbolism, commercial quality image
+
+NECKLACE_011
+Choker necklace with sapphires, blue sapphires alternating with diamonds, white gold setting, displayed on neck mannequin, gradient purple background, glamorous evening jewelry, editorial style
+
+NECKLACE_012
+Coin pendant necklace, ancient Roman coin replica in gold bezel, long 18k gold chain, Mediterranean blue background with olive branch shadow, historical inspired jewelry, artistic photography
+
+NECKLACE_013
+Ruby heart pendant, deep red natural ruby in heart shape, surrounded by diamonds, yellow gold setting and chain, red rose petals scattered background, passionate romantic lighting, luxury jewelry
+
+NECKLACE_014
+Modern bar necklace, horizontal diamond bar pendant, minimalist design, 14k rose gold, clean geometric white and gray background, contemporary jewelry photography, sleek modern aesthetic
+
+NECKLACE_015
+Statement bib necklace, cascading layers of gold leaves and crystals, bold artistic design, black model bust form, dramatic fashion lighting, haute couture jewelry photography, editorial magazine style
+
+NECKLACE_016
+Infinity symbol pendant, intertwined loops with pave diamonds, white gold, soft infinity mirror effect background, symbolic meaningful jewelry, couple gift advertisement, romantic aesthetic
+
+NECKLACE_017
+Turquoise pendant necklace, natural Arizona turquoise cabochon, Native American inspired silver setting, desert sand and sage background, southwestern aesthetic, artisan jewelry photography
+
+NECKLACE_018
+Diamond riviere necklace, graduated round diamonds increasing to center, platinum setting, worn on elegant neck form, opera length, red carpet glamour lighting, celebrity jewelry style, 8k detail
+
+
+================================================================================
+                            EARRINGS (16 IMAGES)
+================================================================================
+
+EARRING_001
+Diamond stud earrings, round brilliant cut 1 carat each, four prong platinum setting, displayed on white earring card, clean studio lighting, classic jewelry photography, everyday luxury, sharp focus
+
+EARRING_002
+Pearl drop earrings, South Sea golden pearls with diamond caps, 18k yellow gold, black velvet background, elegant sophisticated lighting, bridal jewelry photography, lustrous pearl detail
+
+EARRING_003
+Chandelier earrings, cascading diamonds and sapphires, intricate white gold metalwork, displayed on clear acrylic stand, gradient blue background, glamorous evening jewelry, red carpet style
+
+EARRING_004
+Gold hoop earrings, medium sized classic hoops, 14k yellow gold with polished finish, laid on marble surface, warm golden lighting, timeless jewelry staple, commercial product photography
+
+EARRING_005
+Emerald drop earrings, pear shaped emeralds with diamond halos, 18k white gold, deep green velvet display, luxury gemstone lighting highlighting color, high-end jewelry advertisement
+
+EARRING_006
+Huggie earrings with diamonds, small hoop design encrusted with pave diamonds, rose gold, soft pink fabric background, modern everyday luxury, trendy jewelry photography style
+
+EARRING_007
+Vintage cameo earrings, carved shell cameos in ornate gold frames, antique Victorian style, aged lace and vintage photo background, nostalgic warm sepia lighting, heritage jewelry aesthetic
+
+EARRING_008
+Geometric art deco earrings, onyx and diamond angular design, platinum setting, black and white striped background, bold graphic lighting, 1920s inspired jewelry, editorial fashion style
+
+EARRING_009
+Ruby cluster earrings, multiple small rubies in flower formation, yellow gold, red silk fabric background, rich warm lighting, vibrant gemstone jewelry, traditional elegant style
+
+EARRING_010
+Modern ear climber earrings, curved line of graduated diamonds following ear shape, white gold, minimalist gray background, contemporary jewelry photography, edgy modern aesthetic
+
+EARRING_011
+Teardrop diamond earrings, pear shaped diamond drops, platinum settings, worn on elegant ear model, soft studio lighting, bridal jewelry advertisement, romantic sparkling effect
+
+EARRING_012
+Turquoise and silver earrings, oval turquoise cabochons in sterling silver bezels, bohemian style, natural wood and leather background, artisan jewelry photography, southwestern aesthetic
+
+EARRING_013
+Button pearl earrings, large mabe pearls with diamond surrounds, 18k white gold, cream satin background, classic elegant lighting, timeless pearl jewelry, sophisticated style
+
+EARRING_014
+Threader earrings, long delicate gold chains that thread through ear, 14k yellow gold, minimalist aesthetic, clean white background with dramatic shadow, modern jewelry photography
+
+EARRING_015
+Statement tassel earrings, silk tassels with crystal caps, bold colorful design in emerald green, fashion editorial style background, dramatic lighting, runway jewelry photography
+
+EARRING_016
+Diamond inside-out hoop earrings, diamonds set on both inside and outside of hoops, 18k white gold, reflective mirror surface background, glamorous sparkling lighting, luxury jewelry advertisement
+
+
+================================================================================
+                           BRACELETS (14 IMAGES)
+================================================================================
+
+BRACELET_001
+Diamond tennis bracelet, continuous line of round brilliant diamonds, 14k white gold, 5 carat total weight, laid on white silk, bright sparkling studio lighting, classic luxury jewelry, 8k detail
+
+BRACELET_002
+Gold chain link bracelet, chunky Cuban link design, 18k yellow gold, displayed on marble surface, warm golden lighting, bold statement jewelry, hip hop luxury aesthetic
+
+BRACELET_003
+Pearl bracelet, double strand of Akoya pearls with diamond clasp, elegant design, black velvet jewelry display, soft sophisticated lighting, bridal accessory photography
+
+BRACELET_004
+Bangle bracelet set, stack of thin gold bangles in mixed textures smooth hammered twisted, 14k yellow gold, lifestyle wrist shot shadow, modern layered jewelry trend, commercial photography
+
+BRACELET_005
+Cartier love bracelet style, iconic screw motif design, rose gold, clean white background, luxury designer inspired jewelry, editorial product photography, aspirational aesthetic
+
+BRACELET_006
+Charm bracelet, silver chain with multiple meaningful charms heart star moon key, pandora style, soft blue gradient background, personalized jewelry photography, storytelling aesthetic
+
+BRACELET_007
+Emerald and diamond bracelet, alternating emerald cut emeralds and diamonds, 18k white gold, deep green velvet background, luxurious gemstone lighting, high-end jewelry advertisement
+
+BRACELET_008
+Leather and gold wrap bracelet, braided brown leather with gold accents, bohemian style, natural wood background, casual luxury aesthetic, lifestyle jewelry photography
+
+BRACELET_009
+Cuff bracelet, wide hammered silver cuff with turquoise inlay, artisan handcrafted look, desert landscape inspired background, southwestern jewelry photography, artistic aesthetic
+
+BRACELET_010
+Diamond bangle, oval bangle covered in pave diamonds, 18k white gold, worn on elegant wrist form, glamorous lighting with sparkle effects, luxury jewelry advertisement, red carpet style
+
+BRACELET_011
+Vintage art deco bracelet, geometric pattern with onyx diamonds and platinum, 1920s inspired design, black satin background, dramatic period lighting, collector jewelry photography
+
+BRACELET_012
+Beaded bracelet stack, multiple natural stone bracelets lapis lazuli tiger eye jade, bohemian stack, natural linen background, earthy organic aesthetic, wellness jewelry photography
+
+BRACELET_013
+Ruby line bracelet, oval rubies connected by diamond links, 18k yellow gold, rich red velvet background, warm dramatic lighting, precious gemstone jewelry, luxury advertisement
+
+BRACELET_014
+Modern minimalist cuff, open ended geometric design, polished sterling silver, concrete architectural background, contemporary jewelry photography, Scandinavian design aesthetic
+
+
+================================================================================
+                            WATCHES (12 IMAGES)
+================================================================================
+
+WATCH_001
+Luxury diamond watch, round case pave set with diamonds, mother of pearl dial, steel bracelet, clean white background, professional watch photography, high-end timepiece, 8k detail
+
+WATCH_002
+Classic gold dress watch, round yellow gold case, cream dial with Roman numerals, brown leather strap, warm studio lighting, elegant mens watch photography, timeless design
+
+WATCH_003
+Rose gold womens watch, delicate round case, blush dial, mesh bracelet, soft pink fabric background, feminine watch photography, modern luxury accessory
+
+WATCH_004
+Sporty chronograph watch, stainless steel case, black dial with three subdials, rubber strap, dynamic angled shot, active lifestyle photography, professional timepiece
+
+WATCH_005
+Vintage inspired watch, cushion shaped case, aged patina effect, tan leather nato strap, vintage map background, heritage watch photography, nostalgic aesthetic
+
+WATCH_006
+Diamond bezel watch, steel case with diamond set bezel, silver dial, oyster bracelet, laid on marble surface, luxury watch advertisement, sparkling detail shot
+
+WATCH_007
+Minimalist watch, ultra thin case, simple white dial, black leather strap, clean Scandinavian aesthetic background, modern design watch photography, bauhaus inspired
+
+WATCH_008
+Skeleton watch, open worked dial showing movement, rose gold case, see through mechanical beauty, black background, artistic horology photography, intricate detail
+
+WATCH_009
+Pearl dial watch, round case with genuine mother of pearl dial, diamond hour markers, steel bracelet, iridescent lighting effect, womens luxury watch, elegant aesthetic
+
+WATCH_010
+Two tone watch, steel and yellow gold combination, champagne dial, jubilee bracelet, classic luxury styling, professional watch photography, timeless elegance
+
+WATCH_011
+Ceramic watch, white ceramic case and bracelet, clean dial design, modern material luxury, all white background, contemporary watch photography, sleek aesthetic
+
+WATCH_012
+Emerald dial watch, deep green sunburst dial, steel case, leather strap, forest green velvet background, trendy color watch photography, modern luxury timepiece
+
+
+================================================================================
+                          MIXED/JEWELRY SETS (10 IMAGES)
+================================================================================
+
+SET_001
+Bridal jewelry set, diamond necklace earrings and bracelet matching set, white gold, displayed on white satin bridal pillow, romantic soft lighting, wedding jewelry advertisement, complete bridal look
+
+SET_002
+Pearl jewelry collection, matching pearl necklace earrings and bracelet, Akoya pearls, elegant black velvet display box, classic sophisticated lighting, timeless pearl set photography
+
+SET_003
+Gold jewelry flat lay, assorted gold pieces rings chains earrings laid artistically, 14k yellow gold, marble surface, top down photography style, instagram worthy jewelry arrangement
+
+SET_004
+Gemstone collection display, various colored gemstone rings sapphire ruby emerald amethyst, rainbow arrangement, black velvet background, colorful gemstone photography, jewelers collection
+
+SET_005
+Vintage jewelry box contents, assorted antique pieces cameos brooches rings, aged patina, velvet lined wooden box, nostalgic warm lighting, estate jewelry photography, treasure collection
+
+SET_006
+Minimalist jewelry set, matching simple gold necklace earrings and ring, modern design, clean white background, contemporary jewelry photography, cohesive collection aesthetic
+
+SET_007
+Diamond jewelry suite, matching diamond necklace earrings bracelet and ring, 18k white gold, luxury presentation box, glamorous lighting, complete diamond collection, high-end advertisement
+
+SET_008
+Bohemian jewelry collection, layered necklaces rings and bracelets mixed metals and stones, eclectic boho style, natural wood and plant background, free spirit aesthetic, lifestyle photography
+
+SET_009
+Mens jewelry set, watch cufflinks and ring matching set, silver and onyx, masculine presentation, dark leather and wood background, sophisticated mens accessories photography
+
+SET_010
+Rose gold jewelry collection, matching rose gold pieces with morganite stones, romantic blush aesthetic, soft pink marble background, feminine luxury set, cohesive brand photography
+
+
+================================================================================
+                         GENERATION INSTRUCTIONS
+================================================================================
+
+FOR FLUX 1.1 PRO (RECOMMENDED):
+- Resolution: 1024x1024 or 1344x768 (landscape for sets)
+- Aspect Ratio: 1:1 for individual pieces, 4:3 for sets/collections
+- Steps: 25-30 for best quality
+- Guidance Scale: 3.5-4.0 (Flux default works well)
+
+FOR FLUX SCHNELL (FASTER):
+- Good for quick iterations
+- Use same prompts, quality slightly lower but still usable
+
+TIPS FOR BEST RESULTS:
+1. Copy prompt exactly as written
+2. If result isn't perfect, regenerate 2-3 times
+3. Save highest quality version
+4. Maintain consistent naming convention
+
+FILE NAMING CONVENTION:
+- RING_001.png, RING_002.png, etc.
+- NECKLACE_001.png, NECKLACE_002.png, etc.
+- Keep original high-quality for ground truth
+- Create degraded versions in separate folder
+
+================================================================================
+                              SUMMARY
+================================================================================
+
+TOTAL IMAGES: 90
+
+BY CATEGORY:
+├── Rings: 20 images (RING_001 to RING_020)
+├── Necklaces: 18 images (NECKLACE_001 to NECKLACE_018)
+├── Earrings: 16 images (EARRING_001 to EARRING_016)
+├── Bracelets: 14 images (BRACELET_001 to BRACELET_014)
+├── Watches: 12 images (WATCH_001 to WATCH_012)
+└── Mixed/Sets: 10 images (SET_001 to SET_010)
+
+BY BACKGROUND TYPE:
+├── White/Clean Studio: ~30 images
+├── Black/Dark Velvet: ~15 images
+├── Marble Surface: ~12 images
+├── Gradient Backgrounds: ~10 images
+├── Fabric (Silk/Linen): ~10 images
+├── Natural/Lifestyle: ~8 images
+└── Reflective/Special: ~5 images
+
+BY METAL TYPE:
+├── Yellow Gold: ~25 images
+├── White Gold/Platinum: ~30 images
+├── Rose Gold: ~15 images
+├── Silver/Sterling: ~12 images
+└── Mixed Metals: ~8 images
+
+BY GEMSTONE:
+├── Diamonds: ~40 images
+├── Pearls: ~12 images
+├── Colored Gems (Ruby/Emerald/Sapphire): ~20 images
+├── Semi-precious: ~8 images
+└── No Gemstone (plain metal): ~10 images
+
+================================================================================
+

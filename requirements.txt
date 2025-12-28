@@ -1,0 +1,54 @@
+# =============================================================================
+# Jewelry Enhancement Pipeline - Requirements
+# =============================================================================
+
+# Core
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+Pillow>=10.0.0
+opencv-python>=4.8.0
+
+# Dataset Generation (Flux API)
+replicate>=0.22.0
+requests>=2.31.0
+tqdm>=4.66.0
+
+# Super Resolution
+basicsr>=1.4.2
+realesrgan>=0.3.0
+
+# Generative AI (Stable Diffusion + ControlNet)
+diffusers>=0.24.0
+transformers>=4.36.0
+accelerate>=0.25.0
+controlnet-aux>=0.0.7
+xformers>=0.0.23  # Optional: memory optimization
+
+# Evaluation Metrics
+lpips>=0.1.4
+pytorch-fid>=0.3.0
+scikit-image>=0.22.0
+
+# Configuration & Utilities
+pyyaml>=6.0
+python-dotenv>=1.0.0
+
+# Visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Background Removal
+rembg>=2.0.50
+
+# Web Interface
+flask>=3.0.0
+gradio>=4.10.0
+
+# Documentation & Notebooks
+jupyter>=1.0.0
+nbconvert>=7.12.0
+
+# Optional: fal.ai client
+# fal-client>=0.3.0
+
